@@ -16,7 +16,8 @@
             }
         }
         function submitForm() {
-            if (!validateStep(3)) return; 
+            if (!validateStep(3)) return;
+            saveRegisteredUser();
             window.location.href = 'dashboard.html';
         }
     </script>
@@ -137,9 +138,39 @@
             }
             if (currentStep === 2) {
                 const budget = document.getElementById('budget').value;
+                const habitTags = [];
+                habitTags.push(document.getElementById('habits').checked ? 'Есть вредные привычки' : 'Не курит');
+                if (document.getElementById('animals').checked) habitTags.push('Животные');
                 localStorage.setItem('star_user_budget', budget);
+                localStorage.setItem('star_user_habits', JSON.stringify(habitTags));
             }
             return true;
+        }
+
+        function saveRegisteredUser() {
+            const userId = localStorage.getItem('star_user_id') || `user-${Date.now()}`;
+            const registeredAt = localStorage.getItem('star_user_registered_at') || new Date().toISOString();
+            const registeredUsers = JSON.parse(localStorage.getItem('star_registered_users') || '[]');
+            const user = {
+                id: userId,
+                name: localStorage.getItem('star_user_fio') || 'Студент',
+                uni: localStorage.getItem('star_user_uni') || 'УГНТУ',
+                faculty: localStorage.getItem('star_user_faculty') || localStorage.getItem('star_user_uni') || 'УГНТУ',
+                course: localStorage.getItem('star_user_course') || '1',
+                budget: localStorage.getItem('star_user_budget') || '15000',
+                habits: JSON.parse(localStorage.getItem('star_user_habits') || '[]'),
+                preview: 'Пользователь прошел регистрацию и готов к общению',
+                registeredAt
+            };
+            const existingIndex = registeredUsers.findIndex(item => item.id === userId);
+            if (existingIndex >= 0) {
+                registeredUsers[existingIndex] = user;
+            } else {
+                registeredUsers.push(user);
+            }
+            localStorage.setItem('star_user_id', userId);
+            localStorage.setItem('star_user_registered_at', registeredAt);
+            localStorage.setItem('star_registered_users', JSON.stringify(registeredUsers));
         }
 
         function nextStep(step) {

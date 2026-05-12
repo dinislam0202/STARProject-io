@@ -72,9 +72,9 @@
     </div>
 
     <script>
-        const Matches = [
+        const StarterMatches = [
             {
-                id: 1,
+                id: 'seed-1',
                 name: 'Дамир Алижанов',
                 textColor: '#FF8C00',
                 time: '14:40',
@@ -85,7 +85,7 @@
                 ]
             },
             {
-                id: 2,
+                id: 'seed-2',
                 name: 'Виктория Р.',
                 textColor: '#60A5FA',
                 time: 'Вчера',
@@ -95,7 +95,7 @@
                 ]
             },
             {
-                id: 3,
+                id: 'seed-3',
                 name: 'Ролан Рысбаев',
                 textColor: '#C084FC',
                 time: '09.05',
@@ -108,15 +108,46 @@
             }
         ];
 
-        let activeMatchId = 1;
+        let Matches = [];
+        let activeMatchId = 'seed-1';
+
+        function getRegisteredChatUsers() {
+            const currentUserId = localStorage.getItem('star_user_id');
+            let savedUsers = [];
+            try {
+                savedUsers = JSON.parse(localStorage.getItem('star_registered_users') || '[]');
+            } catch (error) {
+                savedUsers = [];
+            }
+            const starterIds = new Set(StarterMatches.map(match => match.id));
+            return savedUsers
+                .filter(user => user.id && user.id !== currentUserId && !starterIds.has(user.id))
+                .map((user, index) => ({
+                    id: user.id,
+                    name: user.name || 'Студент',
+                    textColor: ['#FF8C00', '#60A5FA', '#C084FC'][index % 3],
+                    time: 'сегодня',
+                    preview: user.preview || 'Пользователь прошел регистрацию и готов к общению',
+                    messages: [
+                        { type: 'incoming', text: `Привет! Я ${user.name || 'студент'}, прошел регистрацию в STARProject и готов обсудить совместное жилье.`, time: 'сегодня' }
+                    ]
+                }));
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
+            Matches = [...StarterMatches, ...getRegisteredChatUsers()];
             const params = new URLSearchParams(window.location.search);
             const requestedMatch = params.get('match') || localStorage.getItem('star_selected_match');
             if (Matches.some(match => String(match.id) === String(requestedMatch))) {
-                activeMatchId = Number(requestedMatch);
+                activeMatchId = requestedMatch;
             }
 
+            document.getElementById('dialogsList').addEventListener('click', (event) => {
+                const dialogButton = event.target.closest('[data-match-id]');
+                if (dialogButton) {
+                    selectMatch(dialogButton.dataset.matchId);
+                }
+            });
             renderDialogs();
             selectMatch(activeMatchId);
 
@@ -140,7 +171,7 @@
         function renderDialogs() {
             document.getElementById('chatCount').textContent = Matches.length;
             document.getElementById('dialogsList').innerHTML = Matches.map(match => `
-                <button type="button" onclick="selectMatch(${match.id})" class="w-full text-left p-4 flex items-center gap-4 cursor-pointer chat-item border-b border-white/5 transition ${match.id === activeMatchId ? 'bg-energyOrange/10' : 'opacity-70'}">
+                <button type="button" data-match-id="${escapeHtml(match.id)}" class="w-full text-left p-4 flex items-center gap-4 cursor-pointer chat-item border-b border-white/5 transition ${match.id === activeMatchId ? 'bg-energyOrange/10' : 'opacity-70'}">
                     <div class="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center font-bold" style="color: ${match.textColor}">${escapeHtml(match.name[0])}</div>
                     <div class="flex-1 min-w-0">
                         <div class="flex justify-between items-center mb-1">
