@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сообщения — STARProject</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { oilBlue: '#002147', energyOrange: '#FF8C00', deepDark: '#001529' } } }
+        }
+    </script>
+    <style>
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); }
+        .chat-item:hover { background: rgba(255, 255, 255, 0.05); }
+    </style>
+</head>
+<body class="bg-deepDark min-h-screen flex text-white overflow-hidden">
+    
+    <!-- Side Nav -->
+    <aside class="w-20 border-r border-white/5 flex flex-col items-center py-8 gap-10 bg-oilBlue/50">
+        <a href="index.html" class="text-2xl font-900 text-energyOrange italic">S.</a>
+        <div class="flex flex-col gap-6">
+            <a href="index.html" class="w-12 h-12 flex items-center justify-center rounded-2xl text-gray-500 hover:text-white transition"><i class="fa-solid fa-house"></i></a>
+            <a href="dashboard.html" class="w-12 h-12 flex items-center justify-center rounded-2xl text-gray-500 hover:text-white transition"><i class="fa-solid fa-users"></i></a>
+            <a href="#" class="w-12 h-12 flex items-center justify-center rounded-2xl bg-energyOrange text-white shadow-lg shadow-energyOrange/20"><i class="fa-solid fa-message"></i></a>
+            <a href="profile.html" class="w-12 h-12 flex items-center justify-center rounded-2xl text-gray-500 hover:text-white transition"><i class="fa-solid fa-user-pen"></i></a>
+        </div>
+    </aside>
+
+    <!-- Chat List -->
+    <div class="w-80 border-r border-white/5 hidden md:flex flex-col bg-oilBlue/20">
+        <div class="p-6 border-b border-white/5 flex justify-between items-center">
+            <h2 class="text-xl font-800 uppercase tracking-tighter">Диалоги</h2>
+            <span class="bg-energyOrange text-[10px] px-2 py-0.5 rounded-full">3</span>
+        </div>
+        <div class="flex-1 overflow-y-auto">
+            <!-- Damir -->
+            <div class="p-4 flex items-center gap-4 cursor-pointer chat-item border-b border-white/5 transition active:bg-energyOrange/10">
+                <div class="w-12 h-12 rounded-xl bg-energyOrange/20 flex items-center justify-center font-bold text-energyOrange">Д</div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-center mb-1">
+                        <h4 class="font-bold text-sm truncate">Дамир Алижанов</h4>
+                        <span class="text-[9px] text-gray-500">14:40</span>
+                    </div>
+                    <p class="text-xs text-gray-400 truncate">Привет! Видел твой мэтч, ищу соседа на ФТТ...</p>
+                </div>
+            </div>
+            <!-- Victoria -->
+            <div class="p-4 flex items-center gap-4 cursor-pointer chat-item border-b border-white/5 transition opacity-60">
+                <div class="w-12 h-12 rounded-xl bg-blue-500/20 flex items-center justify-center font-bold text-blue-400">В</div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-center mb-1">
+                        <h4 class="font-bold text-sm truncate">Виктория Р.</h4>
+                        <span class="text-[9px] text-gray-500">Вчера</span>
+                    </div>
+                    <p class="text-xs text-gray-400 truncate">Ты еще ищешь комнату?</p>
+                </div>
+            </div>
+            <!-- Rolan -->
+            <div class="p-4 flex items-center gap-4 cursor-pointer chat-item border-b border-white/5 transition opacity-60">
+                <div class="w-12 h-12 rounded-xl bg-purple-500/20 flex items-center justify-center font-bold text-purple-400">Р</div>
+                <div class="flex-1 min-w-0">
+                    <div class="flex justify-between items-center mb-1">
+                        <h4 class="font-bold text-sm truncate">Ролан Рысбаев</h4>
+                        <span class="text-[9px] text-gray-500">09.05</span>
+                    </div>
+                    <p class="text-xs text-gray-400 truncate">Ок, договорились!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Chat -->
+    <div class="flex-1 flex flex-col bg-deepDark/50">
+        <!-- Chat Header -->
+        <div class="p-4 border-b border-white/5 flex items-center justify-between glass">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-lg bg-energyOrange/20 flex items-center justify-center font-bold text-energyOrange">Д</div>
+                <div>
+                    <h3 class="font-bold text-sm">Дамир Алижанов</h3>
+                    <p class="text-[9px] text-green-500 uppercase font-bold">В сети</p>
+                </div>
+            </div>
+            <div class="flex gap-4 text-gray-400">
+                <i class="fa-solid fa-phone cursor-pointer hover:text-white transition"></i>
+                <i class="fa-solid fa-ellipsis-vertical cursor-pointer hover:text-white transition"></i>
+            </div>
+        </div>
+
+        <!-- Messages Area -->
+        <div class="flex-1 p-6 space-y-4 overflow-y-auto flex flex-col">
+            <div class="self-center bg-white/5 px-3 py-1 rounded-full text-[10px] text-gray-500 mb-4 uppercase tracking-widest font-bold">Сегодня</div>
+            
+            <!-- Incoming -->
+            <div class="max-w-[80%] self-start">
+                <div class="bg-white/5 p-4 rounded-2xl rounded-tl-none text-sm border border-white/5">
+                    Привет! 👋 Увидел, что мы совпали по интересам и бюджету. Я как раз учусь на ФТТ, ищу адекватного соседа без вредных привычек.
+                </div>
+                <span class="text-[9px] text-gray-600 ml-1 mt-1 block">14:40</span>
+            </div>
+
+            <!-- Outgoing -->
+            <div class="max-w-[80%] self-end">
+                <div class="bg-energyOrange p-4 rounded-2xl rounded-tr-none text-sm font-medium shadow-lg shadow-energyOrange/10">
+                    Привет! Да, я тоже не курю и ценю тишину. А в каком районе планируешь снимать?
+                </div>
+                <div class="flex justify-end gap-1 mt-1 mr-1">
+                    <span class="text-[9px] text-gray-600 block">14:42</span>
+                    <i class="fa-solid fa-check-double text-[9px] text-energyOrange"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="p-4 glass border-t border-white/5">
+            <div class="flex items-center gap-4 bg-white/5 rounded-2xl px-4 py-2 border border-white/10">
+                <i class="fa-solid fa-paperclip text-gray-500 cursor-pointer hover:text-white transition"></i>
+                <input type="text" placeholder="Напишите сообщение..." class="flex-1 bg-transparent border-none outline-none text-sm py-2">
+                <div class="w-10 h-10 bg-energyOrange rounded-xl flex items-center justify-center cursor-pointer hover:scale-105 transition">
+                    <i class="fa-solid fa-paper-plane text-white"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
