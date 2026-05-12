@@ -1,8 +1,9 @@
+ (cd "$(git rev-parse --show-toplevel)" && git apply --3way <<'EOF' 
 diff --git a/login.html b/login.html
-index 2a3d7e85b60831b204eb8aa714cb1344c09bde0b..4666a0a59067b107f274becf535c61a56200f22a 100644
+index 2a3d7e85b60831b204eb8aa714cb1344c09bde0b..950f2c8a67a9a9de37ce79b42e1315a81707d8db 100644
 --- a/login.html
 +++ b/login.html
-@@ -14,47 +14,64 @@
+@@ -14,47 +14,93 @@
      </script>
  </head>
  <body class="bg-oilBlue min-h-screen flex items-center justify-center p-6 text-white">
@@ -64,9 +65,41 @@ index 2a3d7e85b60831b204eb8aa714cb1344c09bde0b..4666a0a59067b107f274becf535c61a5
 +            if (!localStorage.getItem('star_user_budget')) {
 +                localStorage.setItem('star_user_budget', '15000');
 +            }
++            if (!localStorage.getItem('star_user_habits')) {
++                localStorage.setItem('star_user_habits', JSON.stringify(['Не курит', 'Тишина']));
++            }
++            if (!localStorage.getItem('star_user_id')) {
++                localStorage.setItem('star_user_id', `demo-${Date.now()}`);
++            }
++            if (!localStorage.getItem('star_user_registered_at')) {
++                localStorage.setItem('star_user_registered_at', new Date().toISOString());
++            }
++            const userId = localStorage.getItem('star_user_id');
++            const registeredUsers = JSON.parse(localStorage.getItem('star_registered_users') || '[]');
++            const demoUser = {
++                id: userId,
++                name: localStorage.getItem('star_user_fio'),
++                uni: localStorage.getItem('star_user_uni'),
++                faculty: localStorage.getItem('star_user_uni'),
++                course: localStorage.getItem('star_user_course'),
++                budget: localStorage.getItem('star_user_budget'),
++                habits: JSON.parse(localStorage.getItem('star_user_habits') || '[]'),
++                preview: 'Демо-пользователь прошел регистрацию',
++                registeredAt: localStorage.getItem('star_user_registered_at')
++            };
++            const existingIndex = registeredUsers.findIndex(user => user.id === userId);
++            if (existingIndex >= 0) {
++                registeredUsers[existingIndex] = demoUser;
++            } else {
++                registeredUsers.push(demoUser);
++            }
++            localStorage.setItem('star_registered_users', JSON.stringify(registeredUsers));
 +            window.location.href = 'dashboard.html';
 +        }
 +    </script>
  </body>
  </html>
 \ No newline at end of file
+ 
+EOF
+)
