@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мэтчи — STARProject</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { oilBlue: '#002147', energyOrange: '#FF8C00', deepDark: '#001529' } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #001529; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .match-card:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.06); }
+    </style>
+</head>
+<body class="min-h-screen bg-oilBlue">
+    <aside class="fixed left-0 top-0 h-full w-20 md:w-64 glass border-r border-white/5 hidden sm:flex flex-col p-6 z-50">
+        <div class="text-xl font-800 mb-12">STAR<span class="text-energyOrange">.</span></div>
+        <nav class="space-y-4 flex-1">
+            <a href="index.html" class="flex items-center gap-4 hover:bg-white/5 p-3 rounded-xl transition text-gray-400"><i class="fa-solid fa-house"></i> <span class="hidden md:inline">Главная</span></a>
+            <a href="#" class="flex items-center gap-4 bg-energyOrange p-3 rounded-xl text-white font-bold"><i class="fa-solid fa-users"></i> <span class="hidden md:inline">Мэтчи</span></a>
+            <a href="chat.html" class="flex items-center gap-4 hover:bg-white/5 p-3 rounded-xl transition text-gray-400"><i class="fa-solid fa-message"></i> <span class="hidden md:inline">Сообщения</span></a>
+            <a href="profile.html" class="flex items-center gap-4 hover:bg-white/5 p-3 rounded-xl transition text-gray-400"><i class="fa-solid fa-user-pen"></i> <span class="hidden md:inline">О себе</span></a>
+        </nav>
+        <div class="pt-6 border-t border-white/10">
+            <a href="index.html" onclick="localStorage.clear()" class="flex items-center gap-4 text-gray-500 hover:text-white transition"><i class="fa-solid fa-right-from-bracket"></i> <span class="hidden md:inline">Выход</span></a>
+        </div>
+    </aside>
+
+    <main class="sm:ml-20 md:ml-64 p-6 md:p-12">
+        <header class="flex justify-between items-center mb-12">
+            <div>
+                <h1 class="text-3xl font-800">Твои <span class="text-energyOrange">мэтчи</span></h1>
+                <p class="text-gray-400" id="statusText">Алгоритм подбирает соседей...</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="text-right hidden md:block">
+                    <p class="font-bold" id="userName">Студент</p>
+                    <p class="text-[10px] text-energyOrange uppercase" id="userCourse">... курс</p>
+                </div>
+                <div id="userAvatarSmall" class="w-12 h-12 rounded-full bg-energyOrange flex items-center justify-center font-bold overflow-hidden border-2 border-white/10">?</div>
+            </div>
+        </header>
+
+        <div id="loadingState" class="hidden flex flex-col items-center justify-center py-20 text-center">
+            <div class="w-16 h-16 border-4 border-energyOrange/20 border-t-energyOrange rounded-full animate-spin mb-6 mx-auto"></div>
+            <p class="text-lg font-bold uppercase tracking-widest animate-pulse">Анализ совпадений...</p>
+        </div>
+
+        <div id="emptyState" class="hidden flex flex-col items-center justify-center py-20 text-center">
+            <h2 class="text-2xl font-800 mb-4">Анкета не заполнена</h2>
+            <a href="form.html" class="bg-energyOrange px-8 py-4 rounded-2xl font-bold">Заполнить анкету</a>
+        </div>
+
+        <div id="matchesContainer" class="hidden">
+            <div id="matchesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </div>
+    </main>
+
+    <script>
+        const OtherUsers = [
+            { id: 1, name: 'Дамир Алижанов', course: '2 курс', match: '98%', budget: '12 000', habits: ['Не курит', 'Игры'], faculty: 'ФТТ' },
+            { id: 2, name: 'Виктория Р.', course: '3 курс', match: '92%', budget: '15 000', habits: ['Чистота', 'Спорт'], faculty: 'ИНБ' },
+            { id: 3, name: 'Ролан Рысбаев', course: '4 курс', match: '85%', budget: '10 000', habits: ['Тишина', 'Дизайн'], faculty: 'ФАДЭТ' }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const userFio = localStorage.getItem('star_user_fio');
+            const userCourse = localStorage.getItem('star_user_course');
+            const userAvatar = localStorage.getItem('star_user_avatar');
+
+            if (!userFio) {
+                document.getElementById('emptyState').classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('userName').textContent = userFio.split(' ')[0];
+            document.getElementById('userCourse').textContent = (userCourse || '...') + ' курс';
+            const avatarDiv = document.getElementById('userAvatarSmall');
+            if (userAvatar) {
+                avatarDiv.innerHTML = `<img src="${userAvatar}" class="w-full h-full object-cover">`;
+            } else {
+                avatarDiv.textContent = userFio[0].toUpperCase();
+            }
+
+            document.getElementById('loadingState').classList.remove('hidden');
+            setTimeout(() => {
+                document.getElementById('loadingState').classList.add('hidden');
+                document.getElementById('matchesContainer').classList.remove('hidden');
+                document.getElementById('statusText').textContent = 'Найдено 3 мэтча';
+                renderMatches();
+            }, 1500);
+        });
+
+        function renderMatches() {
+            document.getElementById('matchesGrid').innerHTML = OtherUsers.map(u => `
+                <div class="match-card glass p-6 rounded-3xl relative transition-all duration-300">
+                    <div class="absolute top-0 right-0 bg-energyOrange/10 px-4 py-2 rounded-bl-3xl">
+                        <span class="text-energyOrange font-800 text-sm">${u.match}</span>
+                    </div>
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center text-xl font-bold border border-white/10">${u.name[0]}</div>
+                        <div>
+                            <h3 class="font-bold text-sm">${u.name}</h3>
+                            <p class="text-[10px] text-gray-500 uppercase">${u.faculty} • ${u.course}</p>
+                        </div>
+                    </div>
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between text-xs"><span>Бюджет</span><span class="font-bold">${u.budget} ₽/мес</span></div>
+                        <div class="flex flex-wrap gap-1">
+                            ${u.habits.map(h => `<span class="bg-white/5 px-2 py-1 rounded text-[9px] border border-white/5">${h}</span>`).join('')}
+                        </div>
+                    </div>
+                    <button class="w-full bg-white/5 border border-white/10 py-3 rounded-xl font-bold hover:bg-energyOrange transition">Написать</button>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Гайд студента — STARProject</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { oilBlue: '#002147', energyOrange: '#FF8C00', deepDark: '#001529' } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #001529; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+</head>
+<body class="bg-oilBlue">
+
+    <!-- Nav -->
+    <nav class="fixed w-full z-50 glass py-4">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-800 tracking-tighter">STAR<span class="text-energyOrange">.</span>Project</a>
+            <div class="flex gap-4">
+                <a href="dashboard.html" class="text-xs font-bold uppercase hover:text-energyOrange transition">В кабинет</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-32 pb-20 container mx-auto px-6">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-4xl md:text-5xl font-800 mb-6 leading-tight">Гайд по <span class="text-energyOrange italic">безопасному</span> съему жилья</h1>
+            <p class="text-gray-400 mb-12 text-lg">Мы собрали самое важное, чтобы твой переезд в Уфу прошел гладко.</p>
+
+            <div class="space-y-12">
+                <!-- Section 1 -->
+                <section class="glass p-8 rounded-3xl">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-energyOrange/20 rounded-xl flex items-center justify-center text-energyOrange"><i class="fa-solid fa-shield-virus text-xl"></i></div>
+                        <h2 class="text-2xl font-bold">Осторожно, мошенники!</h2>
+                    </div>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li class="flex gap-3"><i class="fa-solid fa-circle-xmark text-red-500 mt-1"></i> Никогда не переводи деньги «для брони» до осмотра квартиры.</li>
+                        <li class="flex gap-3"><i class="fa-solid fa-circle-xmark text-red-500 mt-1"></i> Слишком низкая цена за «евроремонт» в центре — это повод насторожиться.</li>
+                        <li class="flex gap-3"><i class="fa-solid fa-circle-xmark text-red-500 mt-1"></i> Проверяй документы: паспорт владельца и выписку из ЕГРН.</li>
+                    </ul>
+                </section>
+
+                <!-- Section 2 -->
+                <section class="glass p-8 rounded-3xl">
+                    <div class="flex items-center gap-4 mb-6">
+                        <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center text-blue-500"><i class="fa-solid fa-file-signature text-xl"></i></div>
+                        <h2 class="text-2xl font-bold">Чек-лист по договору</h2>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-6 text-xs font-medium uppercase tracking-wider text-gray-500">
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/5">Срок аренды и сумма</div>
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/5">Порядок оплаты КУ</div>
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/5">Опись имущества</div>
+                        <div class="bg-white/5 p-4 rounded-xl border border-white/5">Условия расторжения</div>
+                    </div>
+                </section>
+
+                <!-- Section 3 -->
+                <section class="relative overflow-hidden bg-energyOrange p-8 rounded-3xl text-white">
+                    <div class="relative z-10">
+                        <h2 class="text-2xl font-800 mb-4 italic leading-tight">Скачай наш типовой договор <br> для совместной аренды</h2>
+                        <p class="text-white/80 text-sm mb-6">Мы разработали шаблон, который учитывает интересы сразу двух или трех соседей.</p>
+                        <button class="bg-white text-energyOrange px-8 py-3 rounded-xl font-bold hover:scale-105 transition">Скачать DOCX (2.4 MB)</button>
+                    </div>
+                    <i class="fa-solid fa-file-contract absolute -right-10 -bottom-10 text-[12rem] text-black/10"></i>
+                </section>
+            </div>
+
+            <div class="mt-20 text-center">
+                <p class="text-gray-500 text-sm mb-6 uppercase font-bold tracking-widest">Остались вопросы?</p>
+                <a href="chat.html" class="inline-flex items-center gap-2 text-energyOrange font-bold hover:underline">Напиши нашему координатору Виктории <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

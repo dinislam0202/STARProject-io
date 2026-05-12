@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анкета STARProject — УГНТУ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { oilBlue: '#002147', energyOrange: '#FF8C00', deepDark: '#001529' },
+                }
+            }
+        }
+        function submitForm() {
+            if (!validateStep(3)) return; 
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #002147; color: white; }
+        .step-inactive { display: none; }
+        .glass { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-6">
+
+    <div class="max-w-2xl w-full glass p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden">
+        <!-- Progress Bar -->
+        <div class="absolute top-0 left-0 h-1 bg-energyOrange transition-all duration-500" id="progressBar" style="width: 33%"></div>
+        
+        <form id="anketaForm">
+            <!-- Step 1: Базовая инфо -->
+            <div id="step1" class="space-y-6">
+                <h2 class="text-3xl font-800 mb-2">Расскажи о <span class="text-energyOrange">себе</span></h2>
+                <p class="text-gray-400 text-sm mb-8">Шаг 1 из 3: Личные данные</p>
+                
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <label class="text-xs uppercase font-bold text-gray-500">ФИО</label>
+                        <input type="text" id="fio" required placeholder="Иван Иванов" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-energyOrange outline-none transition">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase font-bold text-gray-500">ВУЗ</label>
+                            <input type="text" id="uni" required placeholder="УГНТУ" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-energyOrange outline-none transition">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs uppercase font-bold text-gray-500">Курс</label>
+                            <input type="number" id="course" min="1" max="6" required placeholder="1" class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 focus:border-energyOrange outline-none transition">
+                        </div>
+                    </div>
+                </div>
+                <button type="button" onclick="nextStep(2)" class="w-full bg-energyOrange py-4 rounded-xl font-bold hover:scale-[1.02] transition">Далее</button>
+            </div>
+
+            <!-- Step 2: Привычки -->
+            <div id="step2" class="step-inactive space-y-6">
+                <h2 class="text-3xl font-800 mb-2">Твой <span class="text-energyOrange">быт</span></h2>
+                <p class="text-gray-400 text-sm mb-8">Шаг 2 из 3: Привычки и бюджет</p>
+                
+                <div class="space-y-4">
+                    <div class="space-y-2">
+                        <label class="text-xs uppercase font-bold text-gray-500">Бюджет на жилье (₽/мес)</label>
+                        <input type="range" id="budget" min="5000" max="30000" step="1000" class="w-full accent-energyOrange">
+                        <div class="flex justify-between text-xs text-gray-500"><span>5к</span><span>15к</span><span>30к+</span></div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="glass p-4 rounded-xl cursor-pointer hover:bg-white/10 transition">
+                            <input type="checkbox" id="habits" class="hidden peer">
+                            <div class="flex items-center gap-3 peer-checked:text-energyOrange">
+                                <i class="fa-solid fa-smoking"></i> <span>Есть вредные привычки</span>
+                            </div>
+                        </label>
+                        <label class="glass p-4 rounded-xl cursor-pointer hover:bg-white/10 transition">
+                            <input type="checkbox" id="animals" class="hidden peer">
+                            <div class="flex items-center gap-3 peer-checked:text-energyOrange">
+                                <i class="fa-solid fa-cat"></i> <span>Животные</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                <div class="flex gap-4">
+                    <button type="button" onclick="nextStep(1)" class="w-1/3 border border-white/10 py-4 rounded-xl font-bold">Назад</button>
+                    <button type="button" onclick="nextStep(3)" class="w-2/3 bg-energyOrange py-4 rounded-xl font-bold">Далее</button>
+                </div>
+            </div>
+
+            <!-- Step 3: Верификация -->
+            <div id="step3" class="step-inactive space-y-6">
+                <h2 class="text-3xl font-800 mb-2">Почти <span class="text-energyOrange">готово</span></h2>
+                <p class="text-gray-400 text-sm mb-8">Шаг 3 из 3: Верификация студента</p>
+                
+                <div class="border-2 border-dashed border-white/10 rounded-2xl p-8 text-center hover:border-energyOrange/50 transition cursor-pointer">
+                    <i class="fa-solid fa-cloud-arrow-up text-4xl text-energyOrange mb-4"></i>
+                    <p class="text-sm">Загрузи фото студенческого или зачетки</p>
+                    <p class="text-[10px] text-gray-500 mt-2">Форматы: JPG, PNG до 5MB</p>
+                </div>
+
+                <div class="flex gap-4">
+                    <button type="button" onclick="nextStep(2)" class="w-1/3 border border-white/10 py-4 rounded-xl font-bold">Назад</button>
+                    <button type="button" onclick="submitForm()" class="w-2/3 bg-energyOrange py-4 rounded-xl font-bold text-center flex items-center justify-center">Завершить регистрацию</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validateStep(currentStep) {
+            if (currentStep === 1) {
+                const fio = document.getElementById('fio');
+                const uni = document.getElementById('uni');
+                const course = document.getElementById('course');
+                
+                let isValid = true;
+                [fio, uni, course].forEach(el => {
+                    if (el.value.trim() === "") {
+                        el.classList.add('border-red-500');
+                        isValid = false;
+                    } else {
+                        el.classList.remove('border-red-500');
+                    }
+                });
+
+                if (!isValid) {
+                    alert("Пожалуйста, заполните все поля");
+                    return false;
+                }
+
+                localStorage.setItem('star_user_fio', fio.value);
+                localStorage.setItem('star_user_uni', uni.value);
+                localStorage.setItem('star_user_course', course.value);
+            }
+            if (currentStep === 2) {
+                const budget = document.getElementById('budget').value;
+                localStorage.setItem('star_user_budget', budget);
+            }
+            return true;
+        }
+
+        function nextStep(step) {
+            const current = parseInt(document.querySelector('.step-inactive:not(#step1):not(#step2):not(#step3)') || '1');
+            // This logic is simplified for the toggle. Let's just use the step parameter.
+            if (step > 1 && !validateStep(step - 1)) return;
+            if (step === 3 && !validateStep(2)) return;
+            
+            document.getElementById('step1').classList.add('step-inactive');
+            document.getElementById('step2').classList.add('step-inactive');
+            document.getElementById('step3').classList.add('step-inactive');
+            
+            document.getElementById('step' + step).classList.remove('step-inactive');
+            document.getElementById('progressBar').style.width = (step * 33.33) + '%';
+        }
+    </script>
+</body>
+</html>

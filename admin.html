@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Панель управления — STARProject</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { oilBlue: '#002147', energyOrange: '#FF8C00', deepDark: '#001529' } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #000a12; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); }
+    </style>
+</head>
+<body class="flex">
+
+    <!-- Sidebar -->
+    <aside class="w-64 min-h-screen glass border-r border-white/5 p-8 flex flex-col hidden lg:flex">
+        <div class="text-2xl font-900 mb-12">STAR<span class="text-energyOrange">.</span>Admin</div>
+        <nav class="space-y-6 flex-1">
+            <div class="text-[10px] text-gray-600 uppercase font-bold tracking-widest">Мониторинг</div>
+            <a href="#" class="flex items-center gap-3 text-energyOrange font-bold"><i class="fa-solid fa-chart-pie"></i> Дашборд</a>
+            <a href="#" class="flex items-center gap-3 text-gray-400 hover:text-white transition"><i class="fa-solid fa-users"></i> Студенты</a>
+            <a href="#" class="flex items-center gap-3 text-gray-400 hover:text-white transition"><i class="fa-solid fa-check-double"></i> Верификация</a>
+        </nav>
+        <div class="text-xs text-gray-600 italic">v0.1.0-beta</div>
+    </aside>
+
+    <!-- Main -->
+    <main class="flex-1 p-8 md:p-12 overflow-y-auto">
+        <div class="flex justify-between items-center mb-12">
+            <h1 class="text-3xl font-800">Привет, <span class="text-energyOrange text-stroke-1">Артём</span></h1>
+            <div class="bg-energyOrange px-4 py-2 rounded-xl text-xs font-bold uppercase">Пилотный этап</div>
+        </div>
+
+        <!-- SMART Goal Tracking -->
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+            <div class="glass p-8 rounded-3xl relative overflow-hidden">
+                <p class="text-gray-500 uppercase text-[10px] font-bold mb-2">Регистрации</p>
+                <div class="text-5xl font-800">08<span class="text-gray-700">/10</span></div>
+                <div class="mt-4 h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div class="h-full bg-energyOrange w-[80%]"></div>
+                </div>
+                <i class="fa-solid fa-user-plus absolute -right-4 -bottom-4 text-6xl opacity-5"></i>
+            </div>
+            <div class="glass p-8 rounded-3xl relative overflow-hidden">
+                <p class="text-gray-500 uppercase text-[10px] font-bold mb-2">Мэтчи</p>
+                <div class="text-5xl font-800">01<span class="text-gray-700">/02</span></div>
+                <div class="mt-4 h-2 w-full bg-white/5 rounded-full overflow-hidden">
+                    <div class="h-full bg-blue-500 w-[50%]"></div>
+                </div>
+                <i class="fa-solid fa-heart absolute -right-4 -bottom-4 text-6xl opacity-5 text-blue-500"></i>
+            </div>
+            <div class="glass p-8 rounded-3xl relative overflow-hidden">
+                <p class="text-gray-500 uppercase text-[10px] font-bold mb-2">Дней до дедлайна</p>
+                <div class="text-5xl font-800 text-red-500">02</div>
+                <p class="mt-4 text-[10px] text-gray-500 italic">До 13 мая 2026</p>
+                <i class="fa-solid fa-clock absolute -right-4 -bottom-4 text-6xl opacity-5 text-red-500"></i>
+            </div>
+        </div>
+
+        <!-- Verification Queue -->
+        <div class="glass rounded-3xl p-8">
+            <h3 class="text-xl font-bold mb-8">Очередь верификации</h3>
+            <div class="space-y-4">
+                <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl hover:bg-white/10 transition">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-energyOrange/20 rounded-lg flex items-center justify-center font-bold text-energyOrange">РВ</div>
+                        <div>
+                            <h4 class="font-bold text-sm">Романчикова Виктория</h4>
+                            <p class="text-[10px] text-gray-500 uppercase">ФТТ, 2 курс</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="bg-green-600 px-4 py-2 rounded-lg text-[10px] font-bold hover:bg-green-500">Одобрить</button>
+                        <button class="bg-white/10 px-4 py-2 rounded-lg text-[10px] font-bold hover:bg-red-900/50">Отказ</button>
+                    </div>
+                </div>
+                <div class="flex items-center justify-between p-4 bg-white/5 rounded-2xl opacity-50">
+                    <div class="flex items-center gap-4">
+                        <div class="w-10 h-10 bg-white/5 rounded-lg flex items-center justify-center font-bold text-gray-500">ЛЧ</div>
+                        <div>
+                            <h4 class="font-bold text-sm">Черепанов Лев</h4>
+                            <p class="text-[10px] text-gray-500 uppercase">ГНФ, 4 курс</p>
+                        </div>
+                    </div>
+                    <span class="text-[10px] uppercase font-bold text-gray-600">На проверке</span>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

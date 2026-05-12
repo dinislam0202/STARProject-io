@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход — STARProject</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { oilBlue: '#002147', energyOrange: '#FF8C00', deepDark: '#001529' } } }
+        }
+    </script>
+</head>
+<body class="bg-oilBlue min-h-screen flex items-center justify-center p-6 text-white">
+    <div class="max-w-md w-full">
+        <div class="text-center mb-10">
+            <a href="index.html" class="text-4xl font-800 tracking-tighter italic">STAR<span class="text-energyOrange">.</span>Project</a>
+            <p class="text-gray-400 mt-4 uppercase text-xs tracking-widest font-bold">Вход для студентов УГНТУ</p>
+        </div>
+        
+        <div class="bg-deepDark/50 backdrop-blur-xl border border-white/5 p-10 rounded-3xl shadow-2xl">
+            <div class="space-y-6">
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase font-bold text-gray-500 ml-1">Университетская почта (@rusoil.net)</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-envelope absolute left-4 top-1/2 -translate-y-1/2 text-gray-600"></i>
+                        <input type="email" placeholder="i.ivanov@rusoil.net" class="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-4 py-4 focus:border-energyOrange/50 outline-none transition">
+                    </div>
+                </div>
+                <div class="space-y-2">
+                    <label class="text-[10px] uppercase font-bold text-gray-500 ml-1">Пароль</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-4 top-1/2 -translate-y-1/2 text-gray-600"></i>
+                        <input type="password" placeholder="••••••••" class="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-4 py-4 focus:border-energyOrange/50 outline-none transition">
+                    </div>
+                </div>
+                <a href="dashboard.html" class="block w-full bg-energyOrange py-4 rounded-2xl font-bold text-center shadow-[0_10px_30px_rgba(255,140,0,0.2)] hover:scale-[1.02] transition">
+                    Войти в систему
+                </a>
+            </div>
+            
+            <div class="mt-8 flex items-center gap-4 text-gray-600">
+                <div class="h-[1px] w-full bg-white/5"></div>
+                <span class="text-[10px] uppercase font-bold whitespace-nowrap">или</span>
+                <div class="h-[1px] w-full bg-white/5"></div>
+            </div>
+            
+            <button class="mt-8 w-full border border-white/10 py-4 rounded-2xl font-bold text-sm flex items-center justify-center gap-3 hover:bg-white/5 transition">
+                <i class="fa-brands fa-vk text-blue-400 text-lg"></i> Войти через VK ID
+            </button>
+        </div>
+        
+        <p class="text-center mt-8 text-sm text-gray-500">
+            Нет аккаунта? <a href="form.html" class="text-energyOrange font-bold hover:underline">Создать анкету</a>
+        </p>
+    </div>
+</body>
+</html>

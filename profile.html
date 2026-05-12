@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О себе — STARProject</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: { extend: { colors: { oilBlue: '#002147', energyOrange: '#FF8C00', deepDark: '#001529' } } }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #001529; color: white; }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .input-style { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0.75rem; padding: 0.75rem 1rem; outline: none; transition: all 0.2s; width: 100%; color: white; }
+        .input-style:focus { border-color: #FF8C00; background: rgba(255, 255, 255, 0.08); }
+        .tag-checkbox:checked + label { background-color: #FF8C00; border-color: #FF8C00; color: white; }
+    </style>
+</head>
+<body class="min-h-screen bg-oilBlue">
+    <aside class="fixed left-0 top-0 h-full w-20 md:w-64 glass border-r border-white/5 flex flex-col p-6 z-50">
+        <div class="text-xl font-800 mb-12">STAR<span class="text-energyOrange">.</span></div>
+        <nav class="space-y-4 flex-1">
+            <a href="index.html" class="flex items-center gap-4 hover:bg-white/5 p-3 rounded-xl transition text-gray-400"><i class="fa-solid fa-house"></i> <span class="hidden md:inline">Главная</span></a>
+            <a href="dashboard.html" class="flex items-center gap-4 hover:bg-white/5 p-3 rounded-xl transition text-gray-400"><i class="fa-solid fa-users"></i> <span class="hidden md:inline">Мэтчи</span></a>
+            <a href="chat.html" class="flex items-center gap-4 hover:bg-white/5 p-3 rounded-xl transition text-gray-400"><i class="fa-solid fa-message"></i> <span class="hidden md:inline">Сообщения</span></a>
+            <a href="#" class="flex items-center gap-4 bg-energyOrange p-3 rounded-xl text-white"><i class="fa-solid fa-user-pen"></i> <span class="hidden md:inline">О себе</span></a>
+        </nav>
+        <div class="pt-6 border-t border-white/10">
+            <a href="index.html" onclick="localStorage.clear()" class="flex items-center gap-4 text-gray-500 hover:text-white transition"><i class="fa-solid fa-right-from-bracket"></i> <span class="hidden md:inline">Выход</span></a>
+        </div>
+    </aside>
+
+    <main class="ml-20 md:ml-64 p-6 md:p-12">
+        <div class="max-w-3xl mx-auto">
+            <h1 class="text-3xl font-800 mb-8">Редактировать <span class="text-energyOrange">профиль</span></h1>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="md:col-span-1 space-y-4 text-center">
+                    <p class="text-[10px] uppercase font-bold text-gray-500 text-left ml-1">Аватарка</p>
+                    <div class="relative group cursor-pointer inline-block w-full">
+                        <div id="avatarPreview" class="aspect-square rounded-3xl bg-energyOrange flex items-center justify-center text-4xl font-800 shadow-xl overflow-hidden border-4 border-white/5">?</div>
+                        <label for="avatarInput" class="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition rounded-3xl cursor-pointer">
+                            <i class="fa-solid fa-camera text-2xl text-white"></i>
+                        </label>
+                        <input type="file" id="avatarInput" accept="image/*" class="hidden">
+                    </div>
+                </div>
+                <div class="md:col-span-2 space-y-6">
+                    <div class="space-y-2">
+                        <label class="text-[10px] uppercase font-bold text-gray-500 ml-1">ФИО</label>
+                        <input type="text" id="editFio" class="input-style" placeholder="Иван Иванов">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase font-bold text-gray-500 ml-1">Факультет</label>
+                            <input type="text" id="editFaculty" class="input-style" placeholder="ФТТ">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-[10px] uppercase font-bold text-gray-500 ml-1">Курс (1-4)</label>
+                            <select id="editCourse" class="input-style bg-[#001529]">
+                                <option value="1">1 курс</option>
+                                <option value="2">2 курс</option>
+                                <option value="3">3 курс</option>
+                                <option value="4">4 курс</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <label class="text-[10px] uppercase font-bold text-gray-500 ml-1">Привычки и интересы</label>
+                        <div class="flex flex-wrap gap-2">
+                            <div><input type="checkbox" id="tag_no_smoke" class="hidden tag-checkbox"><label for="tag_no_smoke" class="glass px-3 py-2 rounded-xl text-xs cursor-pointer border border-white/5 transition flex items-center gap-2"><i class="fa-solid fa-ban text-red-500"></i> Не курю</label></div>
+                            <div><input type="checkbox" id="tag_animals" class="hidden tag-checkbox"><label for="tag_animals" class="glass px-3 py-2 rounded-xl text-xs cursor-pointer border border-white/5 transition flex items-center gap-2"><i class="fa-solid fa-paw text-orange-500"></i> Животные</label></div>
+                            <div><input type="checkbox" id="tag_quiet" class="hidden tag-checkbox"><label for="tag_quiet" class="glass px-3 py-2 rounded-xl text-xs cursor-pointer border border-white/5 transition flex items-center gap-2"><i class="fa-solid fa-volume-mute text-blue-500"></i> Тишина</label></div>
+                            <div><input type="checkbox" id="tag_clean" class="hidden tag-checkbox"><label for="tag_clean" class="glass px-3 py-2 rounded-xl text-xs cursor-pointer border border-white/5 transition flex items-center gap-2"><i class="fa-solid fa-broom text-green-500"></i> Чистота</label></div>
+                        </div>
+                    </div>
+                    <button onclick="saveProfile()" class="w-full bg-energyOrange py-4 rounded-2xl font-bold hover:scale-[1.02] transition mt-4">Сохранить изменения</button>
+                    <div id="saveToast" class="hidden text-center text-green-400 font-bold text-sm mt-4">✓ Изменения сохранены!</div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('editFio').value = localStorage.getItem('star_user_fio') || '';
+            document.getElementById('editFaculty').value = localStorage.getItem('star_user_faculty') || '';
+            document.getElementById('editCourse').value = localStorage.getItem('star_user_course') || '1';
+            const savedAvatar = localStorage.getItem('star_user_avatar');
+            if (savedAvatar) {
+                document.getElementById('avatarPreview').innerHTML = `<img src="${savedAvatar}" class="w-full h-full object-cover">`;
+            } else {
+                updateInitial();
+            }
+            const tags = JSON.parse(localStorage.getItem('star_user_tags') || '[]');
+            tags.forEach(id => { if(document.getElementById(id)) document.getElementById(id).checked = true; });
+        });
+
+        function updateInitial() {
+            const fio = document.getElementById('editFio').value;
+            document.getElementById('avatarPreview').textContent = fio ? fio[0].toUpperCase() : '?';
+        }
+
+        document.getElementById('avatarInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    localStorage.setItem('star_user_avatar', event.target.result);
+                    document.getElementById('avatarPreview').innerHTML = `<img src="${event.target.result}" class="w-full h-full object-cover">`;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function saveProfile() {
+            localStorage.setItem('star_user_fio', document.getElementById('editFio').value);
+            localStorage.setItem('star_user_faculty', document.getElementById('editFaculty').value);
+            localStorage.setItem('star_user_course', document.getElementById('editCourse').value);
+            const tags = [];
+            document.querySelectorAll('.tag-checkbox:checked').forEach(cb => tags.push(cb.id));
+            localStorage.setItem('star_user_tags', JSON.stringify(tags));
+            const toast = document.getElementById('saveToast');
+            toast.classList.remove('hidden');
+            setTimeout(() => toast.classList.add('hidden'), 2000);
+        }
+    </script>
+</body>
+</html>
