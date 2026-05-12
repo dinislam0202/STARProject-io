@@ -36,9 +36,9 @@
                         <input type="password" placeholder="••••••••" class="w-full bg-white/5 border border-white/10 rounded-2xl pl-12 pr-4 py-4 focus:border-energyOrange/50 outline-none transition">
                     </div>
                 </div>
-                <a href="dashboard.html" class="block w-full bg-energyOrange py-4 rounded-2xl font-bold text-center shadow-[0_10px_30px_rgba(255,140,0,0.2)] hover:scale-[1.02] transition">
+                <button type="button" onclick="loginDemoUser()" class="block w-full bg-energyOrange py-4 rounded-2xl font-bold text-center shadow-[0_10px_30px_rgba(255,140,0,0.2)] hover:scale-[1.02] transition">
                     Войти в систему
-                </a>
+                </button>
             </div>
             
             <div class="mt-8 flex items-center gap-4 text-gray-600">
@@ -56,5 +56,22 @@
             Нет аккаунта? <a href="form.html" class="text-energyOrange font-bold hover:underline">Создать анкету</a>
         </p>
     </div>
+    <script>
+        function loginDemoUser() {
+            if (!localStorage.getItem('star_user_fio')) {
+                localStorage.setItem('star_user_fio', 'Иван Иванов');
+            }
+            if (!localStorage.getItem('star_user_uni')) {
+                localStorage.setItem('star_user_uni', 'УГНТУ');
+            }
+            if (!localStorage.getItem('star_user_course')) {
+                localStorage.setItem('star_user_course', '2');
+            }
+            if (!localStorage.getItem('star_user_budget')) {
+                localStorage.setItem('star_user_budget', '15000');
+            }
+            window.location.href = 'dashboard.html';
+        }
+    </script>
 </body>
 </html>

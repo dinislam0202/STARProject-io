@@ -64,10 +64,15 @@
 
     <script>
         const OtherUsers = [
-            { id: 1, name: 'Дамир Алижанов', course: '2 курс', match: '98%', budget: '12 000', habits: ['Не курит', 'Игры'], faculty: 'ФТТ' },
-            { id: 2, name: 'Виктория Р.', course: '3 курс', match: '92%', budget: '15 000', habits: ['Чистота', 'Спорт'], faculty: 'ИНБ' },
-            { id: 3, name: 'Ролан Рысбаев', course: '4 курс', match: '85%', budget: '10 000', habits: ['Тишина', 'Дизайн'], faculty: 'ФАДЭТ' }
+            { id: 1, name: 'Дамир Алижанов', course: '2 курс', match: '98%', budget: '12 000', habits: ['Не курит', 'Игры'], faculty: 'ФТТ', preview: 'Привет! Видел твой мэтч, ищу соседа на ФТТ...' },
+            { id: 2, name: 'Виктория Р.', course: '3 курс', match: '92%', budget: '15 000', habits: ['Чистота', 'Спорт'], faculty: 'ИНБ', preview: 'Ты еще ищешь комнату?' },
+            { id: 3, name: 'Ролан Рысбаев', course: '4 курс', match: '85%', budget: '10 000', habits: ['Тишина', 'Дизайн'], faculty: 'ФАДЭТ', preview: 'Ок, договорились!' }
         ];
+
+        function openChat(matchId) {
+            localStorage.setItem('star_selected_match', String(matchId));
+            window.location.href = `chat.html?match=${matchId}`;
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
             const userFio = localStorage.getItem('star_user_fio');
@@ -116,7 +121,7 @@
                             ${u.habits.map(h => `<span class="bg-white/5 px-2 py-1 rounded text-[9px] border border-white/5">${h}</span>`).join('')}
                         </div>
                     </div>
-                    <button onclick="window.location.href='chat.html'" class="w-full bg-white/5 border border-white/10 py-3 rounded-xl font-bold hover:bg-energyOrange hover:border-energyOrange transition group">
+                    <button onclick="openChat(${u.id})" class="w-full bg-white/5 border border-white/10 py-3 rounded-xl font-bold hover:bg-energyOrange hover:border-energyOrange transition group">
                         Написать <i class="fa-solid fa-paper-plane ml-2 group-hover:translate-x-1 transition"></i>
                     </button>
                 </div>
